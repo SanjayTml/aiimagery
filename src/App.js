@@ -9,6 +9,18 @@ const configuration = new Configuration({
 });
 const openai = new OpenAIApi(configuration);
 
+const generateImage = async () => {
+  const imageParameters = {
+    prompt: userPrompt,
+    n: 1,
+    size: "256x256",
+  }
+  const response = await openai.createImage(imageParameters);
+  const urlData = response.data.data[0].url
+  console.log(urlData);
+  setImageUrl(urlData);
+}
+
 function App() {
   const [userPrompt, setUserPrompt] = useState("")
   const [imageUrl, setImageUrl] = useState("")
@@ -26,7 +38,7 @@ function App() {
         placeholder='A sunset on the Sydney Opera House'
         onChange={(e) => setUserPrompt(e.target.value)}
       />
-      <button>Generate</button>
+      <button onClick={() => generateImage()}>Generate</button>
     </div>
   );
 }
