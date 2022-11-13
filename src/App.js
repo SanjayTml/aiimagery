@@ -1,9 +1,8 @@
 import logo from './logo.svg';
 import './App.css';
 import { useState } from "react";
+import { Configuration, OpenAIApi } from "openai";
 
-
-const { Configuration, OpenAIApi } = require("openai");
 const configuration = new Configuration({
   apiKey: process.env.REACT_APP_API_KEY,
 });
@@ -14,13 +13,15 @@ function App() {
   const [imageUrl, setImageUrl] = useState("")
 
   const generateImage = async () => {
+    console.log("Button Clicked");
     const imageParameters = {
       prompt: userPrompt,
-      n: 1,
+      n:1,
       size: "256x256",
     }
+    console.log("Userpromt =", userPrompt);
     const response = await openai.createImage(imageParameters);
-    const urlData = response.data.data[0].url
+    const urlData = response.data.data[0].url;
     console.log(urlData);
     setImageUrl(urlData);
   }
