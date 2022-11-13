@@ -1,5 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
+import { useState } from "react";
+
 
 const { Configuration, OpenAIApi } = require("openai");
 const configuration = new Configuration({
@@ -8,22 +10,23 @@ const configuration = new Configuration({
 const openai = new OpenAIApi(configuration);
 
 function App() {
+  const [userPrompt, setUserPrompt] = useState("")
+  const [imageUrl, setImageUrl] = useState("")
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {
+        imageUrl
+          ? <img src={imageUrl} className="image" alt="ai thing" />
+          : <img src={logo} className="image" alt="logo" />
+      }
+      <p>Generate a unique image using DALL·E</p>
+      <p>What do you want to see?</p>
+      <input
+        placeholder='A sunset on the Sydney Opera House'
+        onChange={(e) => setUserPrompt(e.target.value)}
+      />
+      <button>Generate</button>
     </div>
   );
 }
